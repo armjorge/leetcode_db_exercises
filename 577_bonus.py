@@ -5,4 +5,10 @@ employee = pd.DataFrame(data, columns=['empId', 'name', 'supervisor', 'salary'])
 data = [[2, 500], [4, 2000]]
 bonus = pd.DataFrame(data, columns=['empId', 'bonus']).astype({'empId':'Int64', 'bonus':'Int64'})
 
-print(employee.head())
+
+def employee_bonus(employee: pd.DataFrame, bonus: pd.DataFrame) -> pd.DataFrame:
+    merged = employee.merge(bonus, on = 'empId', how ='left')
+    merged=merged[ (merged['bonus']>=1000) | (merged['bonus'].isna()) ][['name', 'bonus']]
+    return merged 
+df_final = employee_bonus(employee, bonus)
+print(df_final.head(15))    
